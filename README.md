@@ -85,6 +85,16 @@ A server for generating images using Amazon Nova Canvas.
 
 [Learn more](src/nova-canvas-mcp-server/README.md) | [Documentation](https://awslabs.github.io/mcp/servers/nova-canvas-mcp-server/)
 
+### AWS Lambda MCP Server
+
+An server to select and run AWS Lambda function as MCP tools without code changes.
+
+- This server acts as a bridge between MCP clients and AWS Lambda functions, allowing foundation models (FMs) to access and run Lambda functions as tools.
+- This can be used, for example, to access private resources such as internal applications and databases without the need to provide public network access.
+- This approach allows an MCP client to use other AWS services, private networks, and the public internet.
+
+[Learn more](src/lambda-mcp-server/README.md) | [Documentation](https://awslabs.github.io/mcp/servers/lambda-mcp-server/)
+
 ## Installation and Setup
 
 Each server has specific installation instructions. Generally, you can:
@@ -150,6 +160,26 @@ Example configuration for Amazon Q CLI MCP (`~/.aws/amazonq/mcp.json`):
       },
       "disabled": false,
       "autoApprove": []
+    },
+    "awslabs.lambda-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.lambda-mcp-server@latest"],
+      "env": {
+        "AWS_PROFILE": "AWS CLI profile",
+        "AWS_REGION": "us-east-1",
+        "FUNCTION_PREFIX": "function_name_prefix",
+        "FUNCTION_LIST": "first_function_name, second_function_name"
+      }
+    },
+    "awslabs.lambda-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.lambda-mcp-server@latest"],
+      "env": {
+        "AWS_PROFILE": "your-aws-profile",
+        "AWS_REGION": "us-east-1",
+        "FUNCTION_PREFIX": "your-function-prefix",
+        "FUNCTION_LIST": "your-first-function, your-second-function"
+      }
     }
   }
 }
