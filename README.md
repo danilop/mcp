@@ -92,6 +92,7 @@ An server to select and run AWS Lambda function as MCP tools without code change
 - This server acts as a bridge between MCP clients and AWS Lambda functions, allowing foundation models (FMs) to access and run Lambda functions as tools.
 - This can be used, for example, to access private resources such as internal applications and databases without the need to provide public network access.
 - This approach allows an MCP client to use other AWS services, private networks, and the public internet.
+- The Lambda function description is used by MCP to describe the tool and should guide the FMs on when (what does the function provide?) and how (which parameters it needs? which syntax?) to use it.
 
 [Learn more](src/lambda-mcp-server/README.md) | [Documentation](https://awslabs.github.io/mcp/servers/lambda-mcp-server/)
 
@@ -160,16 +161,6 @@ Example configuration for Amazon Q CLI MCP (`~/.aws/amazonq/mcp.json`):
       },
       "disabled": false,
       "autoApprove": []
-    },
-    "awslabs.lambda-mcp-server": {
-      "command": "uvx",
-      "args": ["awslabs.lambda-mcp-server@latest"],
-      "env": {
-        "AWS_PROFILE": "AWS CLI profile",
-        "AWS_REGION": "us-east-1",
-        "FUNCTION_PREFIX": "function_name_prefix",
-        "FUNCTION_LIST": "first_function_name, second_function_name"
-      }
     },
     "awslabs.lambda-mcp-server": {
       "command": "uvx",

@@ -6,6 +6,24 @@ An AWS Labs Model Context Protocol (MCP) server for AWS Lambda to select and run
 
 This MCP server acts as a **bridge** between MCP clients and AWS Lambda functions, allowing generative AI models to access and run Lambda functions as tools. This is useful, for example, to access private resources such as internal applications and databases without the need to provide public network access. This approach allows the model to use other AWS services, private networks, and the public internet.
 
+```mermaid
+graph LR
+    A[Model] <--> B[MCP Client]
+    B <--> C["MCP2Lambda<br>(MCP Server)"]
+    C <--> D[Lambda Function]
+    D <--> E[Other AWS Services]
+    D <--> F[Internet]
+    D <--> G[VPC]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bfb,stroke:#333,stroke-width:4px
+    style D fill:#fbb,stroke:#333,stroke-width:2px
+    style E fill:#fbf,stroke:#333,stroke-width:2px
+    style F fill:#dff,stroke:#333,stroke-width:2px
+    style G fill:#ffd,stroke:#333,stroke-width:2px
+```
+
 From a **security** perspective, this approach implements segregation of duties by allowing the model to invoke the Lambda functions but not to access the other AWS services directly. The client only needs AWS credentials to invoke the Lambda functions. The Lambda functions can then interact with other AWS services (using the function role) and access public or private networks.
 
 ## Prerequisites
