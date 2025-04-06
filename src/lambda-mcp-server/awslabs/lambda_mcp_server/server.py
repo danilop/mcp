@@ -7,6 +7,7 @@ import logging
 import os
 import re
 from mcp.server.fastmcp import Context, FastMCP
+from typing import Coroutine
 
 
 # Set up logging
@@ -83,11 +84,11 @@ def format_lambda_response(function_name: str, payload: bytes) -> str:
         return f"Function {function_name} returned payload: {payload}"
 
 
-def invoke_lambda_function_impl(
+async def invoke_lambda_function_impl(
     function_name: str, parameters: dict, ctx: Context
 ) -> str:
     """Tool that invokes an AWS Lambda function with a JSON payload."""
-    ctx.info(f"Invoking {function_name} with parameters: {parameters}")
+    await ctx.info(f"Invoking {function_name} with parameters: {parameters}")
 
     response = lambda_client.invoke(
         FunctionName=function_name,
@@ -95,7 +96,7 @@ def invoke_lambda_function_impl(
         Payload=json.dumps(parameters),
     )
 
-    ctx.info(
+    await ctx.info(
         f'Function {function_name} returned with status code: {response["StatusCode"]}'
     )
 
@@ -103,7 +104,7 @@ def invoke_lambda_function_impl(
         error_message = (
             f'Function {function_name} returned with error: {response["FunctionError"]}'
         )
-        ctx.error(error_message)
+        await ctx.error(error_message)
         return error_message
 
     payload = response["Payload"].read()
@@ -117,7 +118,7 @@ def create_lambda_tool(function_name: str, description: str):
     tool_name = sanitize_tool_name(function_name)
 
     # Define the inner function
-    def lambda_function(parameters: dict, ctx: Context) -> str:
+    def lambda_function(parameters: dict, ctx: Context) -> Coroutine[str, str, Context]:
         """Tool for invoking a specific AWS Lambda function with parameters."""
         # Use the same implementation as the generic invoke function
         return invoke_lambda_function_impl(function_name, parameters, ctx)
