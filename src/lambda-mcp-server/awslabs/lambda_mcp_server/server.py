@@ -16,18 +16,23 @@ logger = logging.getLogger(__name__)
 
 AWS_PROFILE = os.environ.get('AWS_PROFILE', 'default')
 logger.info(f'AWS_PROFILE: {AWS_PROFILE}')
+
 AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
 logger.info(f'AWS_REGION: {AWS_REGION}')
+
 FUNCTION_PREFIX = os.environ.get('FUNCTION_PREFIX', '')
 logger.info(f'FUNCTION_PREFIX: {FUNCTION_PREFIX}')
+
 FUNCTION_LIST = [
     function_name.strip()
     for function_name in os.environ.get('FUNCTION_LIST', '').split(',')
     if function_name.strip()
 ]
 logger.info(f'FUNCTION_LIST: {FUNCTION_LIST}')
+
 FUNCTION_TAG_KEY = os.environ.get('FUNCTION_TAG_KEY', '')
 logger.info(f'FUNCTION_TAG_KEY: {FUNCTION_TAG_KEY}')
+
 FUNCTION_TAG_VALUE = os.environ.get('FUNCTION_TAG_VALUE', '')
 logger.info(f'FUNCTION_TAG_VALUE: {FUNCTION_TAG_VALUE}')
 
@@ -204,7 +209,7 @@ def register_lambda_functions():
 def main():
     """Run the MCP server with CLI argument support."""
     parser = argparse.ArgumentParser(
-        description='An AWS Labs Model Context Protocol (MCP) server for Lambda'
+        description='An AWS Model Context Protocol (MCP) server for Lambda'
     )
     parser.add_argument('--sse', action='store_true', help='Use SSE transport')
     parser.add_argument('--port', type=int, default=8888, help='Port to run the server on')

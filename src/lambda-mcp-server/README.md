@@ -1,6 +1,6 @@
 # AWS Lambda MCP Server
 
-An AWS Labs Model Context Protocol (MCP) server for AWS Lambda to select and run Lambda function as MCP tools without code changes.
+A Model Context Protocol (MCP) server for AWS Lambda to select and run Lambda function as MCP tools without code changes.
 
 ## Features
 
@@ -55,14 +55,22 @@ Here are some ways you can work with MCP across AWS, and we'll be adding support
 The `AWS_PROFILE` and the `AWS_REGION` are optional, their defualt values are `default` and `us-east-1`.
 
 You can specify `FUNCTION_PREFIX`, `FUNCTION_LIST`, or both.
+You can also specify `FUNCTION_TAG_KEY` and `FUNCTION_TAG_VALUE` to filter the functions by tag.
 
-The function name is used as MCP tool name. The function description in AWS Lambda is used as MCP tool description. The function description should clarify when to use the function (what it provides) and how (which parameters). For example, a function that gives access to an internal Customer Relationship Management (CRM) system can use this description:
+**IMPORTANT**: The function name is used as MCP tool name. The function description in AWS Lambda is used as MCP tool description. The function description should clarify when to use the function (what it provides) and how (which parameters). For example, a function that gives access to an internal Customer Relationship Management (CRM) system can use this description:
 
+```plaintext
+Retrieve customer status on the CRM system based on { 'customerId' } or { 'customerEmail' }
 ```
-Retrive customer status on the CRM system based on { 'customerId' } or { 'customerEmail' }
-```
 
-Sample functions that can be deployed via AWS SAM are provided in the `Examples` folder.
+Sample functions that can be deployed via AWS SAM are provided in the `examples` folder.
+
+## Best practices
+
+- Use the `FUNCTION_LIST` to specify the functions that are available as MCP tools.
+- Use the `FUNCTION_PREFIX` to specify the prefix of the functions that are available as MCP tools.
+- Use the `FUNCTION_TAG_KEY` and `FUNCTION_TAG_VALUE` to specify the tag key and value of the functions that are available as MCP tools.
+- AWS Lambda `Description` property: the description of the function is used as MCP tool description, so it should be very detailed to help the model understand when and how to use the function and with with which parameters.
 
 ## Security Considerations
 
