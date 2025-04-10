@@ -45,7 +45,9 @@ Here are some ways you can work with MCP across AWS, and we'll be adding support
         "AWS_PROFILE": "your-aws-profile",
         "AWS_REGION": "us-east-1",
         "FUNCTION_PREFIX": "your-function-prefix",
-        "FUNCTION_LIST": "your-first-function, your-second-function"
+        "FUNCTION_LIST": "your-first-function, your-second-function",
+        "FUNCTION_TAG_KEY": "your-tag-key",
+        "FUNCTION_TAG_VALUE": "your-tag-value"
       }
     }
   }
@@ -54,7 +56,9 @@ Here are some ways you can work with MCP across AWS, and we'll be adding support
 
 The `AWS_PROFILE` and the `AWS_REGION` are optional, their defualt values are `default` and `us-east-1`.
 
-You can specify `FUNCTION_PREFIX`, `FUNCTION_LIST`, or both.
+You can specify `FUNCTION_PREFIX`, `FUNCTION_LIST`, or both. If both are empty, all functions pass the name check.
+After the name check, if both `FUNCTION_TAG_KEY` and `FUNCTION_TAG_VALUE` are set, functions are further filtered by tag (with key=value).
+If ony one of `FUNCTION_TAG_KEY` and `FUNCTION_TAG_VALUE`, then no function is selected and a warning is displayed.
 
 The function name is used as MCP tool name. The function description in AWS Lambda is used as MCP tool description. The function description should clarify when to use the function (what it provides) and how (which parameters). For example, a function that gives access to an internal Customer Relationship Management (CRM) system can use this description:
 
