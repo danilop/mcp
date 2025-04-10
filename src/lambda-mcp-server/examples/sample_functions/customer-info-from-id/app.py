@@ -22,22 +22,37 @@ def lambda_handler(event: dict, context: dict) -> dict:
         # For demo purposes, we'll return mock data
 
         # Simulate database lookup
-        if customer_id == '12345':
-            return {
-                'customerId': '12345',
-                'name': 'John Doe',
-                'email': 'john.doe@example.com',
-                'phone': '+1-555-123-4567',
-                'address': {
-                    'street': '123 Main St',
-                    'city': 'Anytown',
-                    'state': 'CA',
-                    'zipCode': '12345',
-                },
-                'accountCreated': '2022-01-15',
-            }
-        else:
-            return {'error': 'Customer not found'}
+        match customer_id:
+            case '12345':
+                return {
+                    'customerId': '12345',
+                    'name': 'John Doe',
+                    'email': 'john.doe@example.com',
+                    'phone': '+1-555-123-4567',
+                    'address': {
+                        'street': '123 Main St',
+                        'city': 'Anytown',
+                        'state': 'CA',
+                        'zipCode': '12345',
+                    },
+                    'accountCreated': '2022-01-15',
+                }
+            case '54321':
+                return {
+                    'customerId': '54321',
+                    'name': 'Jane Smith',
+                    'email': 'jane.smith@example.com',
+                    'phone': '+1-555-987-6543',
+                    'address': {
+                        'street': '456 Oak Ave',
+                        'city': 'Othertown',
+                        'state': 'NY',
+                        'zipCode': '67890',
+                    },
+                    'accountCreated': '2022-02-20',
+                }
+            case _:
+                return {'error': 'Customer not found'}
 
     except Exception as e:
         return {'error': str(e)}

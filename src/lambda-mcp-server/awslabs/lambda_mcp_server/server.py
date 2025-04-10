@@ -7,7 +7,6 @@ import logging
 import os
 import re
 from mcp.server.fastmcp import Context, FastMCP
-from typing import Any, Coroutine
 
 
 # Set up logging
@@ -41,7 +40,7 @@ lambda_client = boto3.Session(profile_name=AWS_PROFILE, region_name=AWS_REGION).
 mcp = FastMCP(
     'awslabs.lambda-mcp-server',
     instructions="""Use AWS Lambda functions to improve your answers.
-    These Lambda functions can give you additional capabilities and access to AWS services and resources in an AWS account.""",
+    These Lambda functions give you additional capabilities and access to AWS services and resources in an AWS account.""",
     dependencies=['pydantic', 'boto3'],
 )
 
@@ -115,10 +114,10 @@ def create_lambda_tool(function_name: str, description: str):
     tool_name = sanitize_tool_name(function_name)
 
     # Define the inner function
-    def lambda_function(parameters: dict, ctx: Context) -> Coroutine[Any, Any, str]:
+    async def lambda_function(parameters: dict, ctx: Context) -> str:
         """Tool for invoking a specific AWS Lambda function with parameters."""
         # Use the same implementation as the generic invoke function
-        return invoke_lambda_function_impl(function_name, parameters, ctx)
+        return await invoke_lambda_function_impl(function_name, parameters, ctx)
 
     # Set the function's documentation
     lambda_function.__doc__ = description

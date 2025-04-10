@@ -25,7 +25,7 @@ def lambda_handler(event: dict, context: dict) -> dict:
         if email == 'john.doe@example.com':
             return {'customerId': '12345'}
         else:
-            return {'error': 'Customer not found'}
+            return {'customerId': '54321'}
 
     except Exception as e:
         return {'error': str(e)}
