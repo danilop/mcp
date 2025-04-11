@@ -15,6 +15,9 @@ Resources:
       Runtime: python3.13
       Architectures:
         - arm64
+      # checkov:skip=CKV_AWS_115:Because this is an example, there is no requirement to reserve concurrency
+      # checkov:skip=CKV_AWS_116:Because this is an example, there is no requirement for a DLQ
+      # checkov:skip=CKV_AWS_117:Because this is an example, there is no requirement to run within a VPC
 
   CustomerIdFromEmail:
     Type: AWS::Serverless::Function
@@ -27,6 +30,9 @@ Resources:
       Runtime: python3.13
       Architectures:
         - arm64
+      # checkov:skip=CKV_AWS_115:Because this is an example, there is no requirement to reserve concurrency
+      # checkov:skip=CKV_AWS_116:Because this is an example, there is no requirement for a DLQ
+      # checkov:skip=CKV_AWS_117:Because this is an example, there is no requirement to run within a VPC
 
 Outputs:
 
