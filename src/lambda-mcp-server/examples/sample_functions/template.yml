@@ -38,8 +38,8 @@ Outputs:
 
   CustomerInfoFromId:
     Description: "CustomerInfoFromId Function ARN"
-    Value: !GetAtt CustomerInfoFromId.Arn
-    
+    Value: Fn::GetAtt CustomerInfoFromId.Arn
+
   CustomerIdFromEmail:
     Description: "CustomerIdFromEmail Function ARN"
-    Value: !GetAtt CustomerIdFromEmail.Arn
+    Value: Fn::GetAtt CustomerIdFromEmail.Arn
